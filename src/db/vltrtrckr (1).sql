@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2024 at 04:25 PM
+-- Generation Time: Jun 22, 2024 at 10:36 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,7 @@ CREATE TABLE `tbl_event` (
 --
 
 INSERT INTO `tbl_event` (`e_id`, `e_name`, `e_location`, `e_sdate`, `e_edate`, `e_status`, `e_image`) VALUES
-(1, 'Tree Planting 2024', 'Cebu City', '2024-08-24', '2024-08-25', 'Pending', '');
+(1, 'Tree Planting 2024', 'Cebu City', '2024-08-24', '2024-08-25', 'Active', '');
 
 -- --------------------------------------------------------
 
@@ -71,6 +71,26 @@ INSERT INTO `tbl_user` (`user_id`, `user_firstname`, `user_lastname`, `username`
 (2, 'francis', 'doron', 'ked1', 'LINbqJZtkCEg+0UEA3+tNO/6S5Rh6YjkxNoHOtUNroI=', 'ked@gmail.com', 'Admin', 'Active', ''),
 (3, 'ked', 'dor', 'kedg', 'LINbqJZtkCEg+0UEA3+tNO/6S5Rh6YjkxNoHOtUNroI=', 'test2@gmail.com', 'User', 'Active', 'src/images/Screenshot_20230301_031641.png');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_vlntr`
+--
+
+CREATE TABLE `tbl_vlntr` (
+  `v_id` int(50) NOT NULL,
+  `user_id` int(50) NOT NULL,
+  `e_id` int(50) NOT NULL,
+  `v_status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_vlntr`
+--
+
+INSERT INTO `tbl_vlntr` (`v_id`, `user_id`, `e_id`, `v_status`) VALUES
+(1, 1, 1, 'Active');
+
 --
 -- Indexes for dumped tables
 --
@@ -88,6 +108,14 @@ ALTER TABLE `tbl_user`
   ADD PRIMARY KEY (`user_id`);
 
 --
+-- Indexes for table `tbl_vlntr`
+--
+ALTER TABLE `tbl_vlntr`
+  ADD PRIMARY KEY (`v_id`),
+  ADD KEY `e_id` (`e_id`),
+  ADD KEY `u_id` (`user_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -102,6 +130,23 @@ ALTER TABLE `tbl_event`
 --
 ALTER TABLE `tbl_user`
   MODIFY `user_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tbl_vlntr`
+--
+ALTER TABLE `tbl_vlntr`
+  MODIFY `v_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tbl_vlntr`
+--
+ALTER TABLE `tbl_vlntr`
+  ADD CONSTRAINT `tbl_vlntr_ibfk_1` FOREIGN KEY (`e_id`) REFERENCES `tbl_event` (`e_id`),
+  ADD CONSTRAINT `tbl_vlntr_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `tbl_user` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
